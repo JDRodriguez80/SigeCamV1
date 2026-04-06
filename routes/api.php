@@ -13,6 +13,7 @@ use App\Http\Controllers\AcademicCycleController;
 use App\Http\Controllers\EducationLevelController;
 use App\Http\Controllers\DisabilityTypeController;
 use App\Http\Controllers\DocumentTypeController;
+use App\Http\Controllers\PaymentTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,12 +79,18 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/gradeLevel/{id}',[GradeLevelController::class, 'show']);
     Route::delete('/gradeLevel/{id}',[GradeLevelController::class, 'destroy']);
 
-
     //rutas para grupos
     Route::post('/group/list', [GroupController::class, 'index']);
     Route::post('/group/', [GroupController::class, 'store']);
     Route::put('/group/updateGroup', [GroupController::class, 'update']);
     Route::delete('/group/delete',[GroupController::class,'destroy']);
+
+    //rutas para tipo de pagos
+    Route::get('/paymentType/',[PaymentTypeController::class, 'index']);
+    Route::post('/paymentType/',[PaymentTypeController::class, 'store']);
+    Route::put('/paymentType/{id}',[PaymentTypeController::class, 'update']);
+    Route::get('/paymentType/{id}',[PaymentTypeController::class, 'show']);
+    Route::delete('/paymentType/{id}',[PaymentTypeController::class, 'destroy']);
 
     //rutas para secciones
     Route::post('/section/', [SectionController::class,'store']);

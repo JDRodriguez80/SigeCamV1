@@ -92,7 +92,7 @@ class Student extends Model
     public function guardians()
     {
         return $this->belongsToMany(Guardian::class, 'student_guardians')
-            ->withPivot('relationship_type_id', 'is_legal_guardian', 'is_primary_contact')
+            ->withPivot('relationship_type_id', 'is_legal_guardian', 'is_primary_contact','lives_with_student','priority_order','notes')
             ->withTimestamps();
     }
     /*Relacion con pagos*/

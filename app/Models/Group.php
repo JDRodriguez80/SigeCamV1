@@ -74,4 +74,8 @@ class Group extends Model
         return $this->enrollments()->count()< $this->capacity;
     }
 
+    public function student()
+    {
+        return $this->hasManyThrough(Student::class, Enrollment::class);
+    }
 }
