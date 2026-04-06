@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
  * @property int $id
@@ -36,7 +36,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|student_guardians whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class student_guardians extends Model
+class Student_guardians extends Pivot
 {
     use HasFactory;
     protected $fillable = [

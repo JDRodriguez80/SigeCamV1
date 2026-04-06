@@ -71,6 +71,6 @@ class Guardian extends Model
     /*Relacion con los documentos*/
     public function documents()
     {
-        return $this->morphMany(Documents::class, 'docunmentable');
+        return $this->morphMany(Documents::class, 'documentable');
     }
 }

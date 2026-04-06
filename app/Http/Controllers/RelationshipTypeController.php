@@ -18,6 +18,7 @@ class relationshipTypeController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
      */
     public function create()
     {
@@ -43,7 +44,7 @@ class relationshipTypeController extends Controller
     public function show(string $id)
     {
         $relationType=relationshipType::findOrFail($id);
-        return response()->json($relationType,201);
+        return response()->json($relationType,200);
     }
 
     /**
@@ -65,7 +66,7 @@ class relationshipTypeController extends Controller
         ]);
         $relationshipType=relationshipType::findOrFail($id);
         $relationshipType->update(request()->only('code','name'));
-        return response()->json($relationshipType,201);
+        return response()->json($relationshipType,200);
     }
 
     /**

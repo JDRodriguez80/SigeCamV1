@@ -43,7 +43,6 @@ class AcademicCycle extends Model
     protected $fillable = [
 
         'name',
-        'cycle_name',
         'start_date',
         'end_date',
         'status',
