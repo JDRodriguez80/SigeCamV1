@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GuardianController;
 use App\Http\Controllers\relationshipTypeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +15,8 @@ use App\Http\Controllers\EducationLevelController;
 use App\Http\Controllers\DisabilityTypeController;
 use App\Http\Controllers\DocumentTypeController;
 use App\Http\Controllers\PaymentTypeController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\StudentRegistrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,18 +88,34 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::put('/group/updateGroup', [GroupController::class, 'update']);
     Route::delete('/group/delete',[GroupController::class,'destroy']);
 
+    //rutas para guardians
+    Route::get('/guardians/',[GuardianController::class, 'index']);
+    Route::post('/guardians/',[GuardianController::class, 'store']);
+    Route::put('/guardians/{id}',[GuardianController::class, 'update']);
+    Route::get('/guardians/{id}',[GuardianController::class, 'show']);
+    Route::delete('/guardians/{id}',[GuardianController::class, 'destroy']);
+
     //rutas para tipo de pagos
     Route::get('/paymentType/',[PaymentTypeController::class, 'index']);
     Route::post('/paymentType/',[PaymentTypeController::class, 'store']);
     Route::put('/paymentType/{id}',[PaymentTypeController::class, 'update']);
     Route::get('/paymentType/{id}',[PaymentTypeController::class, 'show']);
     Route::delete('/paymentType/{id}',[PaymentTypeController::class, 'destroy']);
+    //rutas para registro
+    Route::post('/student/register',[StudentRegistrationController::class, 'store']);
 
     //rutas para secciones
     Route::post('/section/', [SectionController::class,'store']);
     Route::put('/section/{id}', [SectionController::class, 'update']);
     Route::get('/section/{id}',[SectionController::class, 'show']);
     Route::delete('/section/delete/{id}',[SectionController::class, 'destroy']);
+
+    //rutas para students
+    Route::get('/students/',[StudentController::class, 'index']);
+    Route::post('/students/',[StudentController::class, 'store']);
+    Route::get('/students/{id}',[StudentController::class, 'show']);
+    Route::put('/students/{id}',[StudentController::class, 'update']);
+    Route::delete('/students/{id}',[StudentController::class, 'destroy']);
 
     //rutas para tipos de relacion
     Route::get('/relationshipType/',[RelationshipTypeController::class,'index']);

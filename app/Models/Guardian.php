@@ -73,4 +73,9 @@ class Guardian extends Model
     {
         return $this->morphMany(Documents::class, 'documentable');
     }
+
+    public function educationLevel()
+    {
+        return $this->belongsTo(EducationLevels::class);
+    }
 }
