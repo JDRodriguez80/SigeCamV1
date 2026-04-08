@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('middle_name')->nullable();
             $table->string('second_last_name')->nullable(); // Segundo apellido
             $table->string('curp')->unique();
+            $table->enum('gender',['masculino','femenino'])->nullable();
             $table->date('birth_date');
             $table->string('birth_place');
             $table->text('address');

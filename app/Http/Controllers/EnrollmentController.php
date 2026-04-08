@@ -17,11 +17,11 @@ class EnrollmentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'student_id'=>'required|exists:student,id',
+            'student_id'=>'required|exists:students,id',
             'academic_cycle_id'=>'required|exists:academic_cycles,id',
             'group_id'=>'required|exists:groups,id',
             'enrollment_date'=>'required|date',
-            'status'=>'required|in:pre_inscrito,insctrito,baja,graduado',
+            'status' => 'required|in:pre_inscrito,inscrito,baja,graduado,repetidor',
             'has_complementary_care'=>'boolean',
             'notes'=>'nullable|string'
         ]);
@@ -32,7 +32,7 @@ class EnrollmentController extends Controller
     //mostrando un registro en especifico
     public function show($id)
     {
-        $enrollment=Enrollment::with('student', 'academicCycle', 'group');
+        $enrollment=Enrollment::with('student', 'academicCycle', 'group')->findOrFail($id);
         return response()->json($enrollment);
     }
 
@@ -40,10 +40,10 @@ class EnrollmentController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'student_id'=>'required|exists:student,id',
+            'student_id'=>'required|exists:students,id',
             'academic_cycle_id'=>'required|exists:academic_cycles,id',
             'group_id'=>'required|exists:groups,id',
-            'status'=>'required|in:pre_inscrito,insctrito,baja,graduado',
+            'status' => 'required|in:pre_inscrito,inscrito,baja,graduado,repetidor',
             'has_complementary_care'=>'boolean',
             'notes'=>'nullable|string'
         ]);

@@ -10,7 +10,7 @@ class GroupController extends Controller
     /**Mostrando todos los grupos**/
     public function index()
     {
-        $groups = Group::with('academicCycle','section','gradeLevel','enrollments');
+        $groups = Group::with('academicCycle','section','gradeLevel','enrollments')->get();
         return response()->json($groups);
     }
     /* creating new group*/

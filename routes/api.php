@@ -17,6 +17,8 @@ use App\Http\Controllers\DocumentTypeController;
 use App\Http\Controllers\PaymentTypeController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\StudentRegistrationController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\invoiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,8 +75,11 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::delete('/educationLevel/{id}',[EducationLevelController::class, 'destroy']);
 
     //rutas para inscripciones
-    Route::post('/enrollments/t',[EnrollmentController::class, 'index']);
-    Route::post('/enrollments/newEnrollment', [EnrollmentController::class, 'store']);
+    Route::get('/enrollments', [EnrollmentController::class, 'index']);  // Mostrar todas las inscripciones
+    Route::post('/enrollments', [EnrollmentController::class, 'store']); // Crear una inscripción
+    Route::get('/enrollments/{id}', [EnrollmentController::class, 'show']); // Mostrar inscripción por ID
+    Route::put('/enrollments/{id}', [EnrollmentController::class, 'update']); // Actualizar inscripción
+    Route::delete('/enrollments/{id}', [EnrollmentController::class, 'destroy']); // Eliminar inscripción
 
     //rutas para grados
     Route::post('/gradeLevel/',[GradeLevelController::class,'store']);
@@ -83,8 +88,9 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::delete('/gradeLevel/{id}',[GradeLevelController::class, 'destroy']);
 
     //rutas para grupos
-    Route::post('/group/list', [GroupController::class, 'index']);
+    Route::get('/group/list', [GroupController::class, 'index']);
     Route::post('/group/', [GroupController::class, 'store']);
+    Route::get('/group/{id}', [GroupController::class, 'show']);
     Route::put('/group/updateGroup', [GroupController::class, 'update']);
     Route::delete('/group/delete',[GroupController::class,'destroy']);
 
@@ -95,14 +101,24 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/guardians/{id}',[GuardianController::class, 'show']);
     Route::delete('/guardians/{id}',[GuardianController::class, 'destroy']);
 
+    //rutas para invoices
+    Route::post('/invoices', [InvoiceController::class, 'store']);  // Crear una nueva factura
+    Route::get('/invoices/{id}', [InvoiceController::class, 'show']);  // Obtener una factura específica
+    Route::get('/invoices/student/{studentId}', [InvoiceController::class, 'index']);  // Listar todas las facturas de un estudiante
+
+    //rutas para pagos
+    Route::get('/payments/{studentId}', [PaymentController::class, 'index']);  // Obtener pagos de un estudiante
+    Route::post('/payments', [PaymentController::class, 'store']);  // Crear un nuevo pago
+    Route::get('/payments/{id}', [PaymentController::class, 'show']);  // Obtener un pago específico
+    Route::put('/payments/{id}', [PaymentController::class, 'update']);  // Actualizar un pago
+    Route::delete('/payments/{id}', [PaymentController::class, 'destroy']);  // Eliminar un pago
+
     //rutas para tipo de pagos
     Route::get('/paymentType/',[PaymentTypeController::class, 'index']);
     Route::post('/paymentType/',[PaymentTypeController::class, 'store']);
     Route::put('/paymentType/{id}',[PaymentTypeController::class, 'update']);
     Route::get('/paymentType/{id}',[PaymentTypeController::class, 'show']);
     Route::delete('/paymentType/{id}',[PaymentTypeController::class, 'destroy']);
-    //rutas para registro
-    Route::post('/student/register',[StudentRegistrationController::class, 'store']);
 
     //rutas para secciones
     Route::post('/section/', [SectionController::class,'store']);
@@ -116,6 +132,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/students/{id}',[StudentController::class, 'show']);
     Route::put('/students/{id}',[StudentController::class, 'update']);
     Route::delete('/students/{id}',[StudentController::class, 'destroy']);
+    //rutas para registro
+    Route::post('/students/register',[StudentRegistrationController::class, 'store']);
 
     //rutas para tipos de relacion
     Route::get('/relationshipType/',[RelationshipTypeController::class,'index']);
@@ -123,6 +141,5 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/relationshipType/{id}',[RelationshipTypeController::class,'show']);
     Route::put('/relationshipType/{id}', [RelationshipTypeController::class, 'update']);
     Route::delete('/relationshipType/{id}',[RelationshipTypeController::class, 'destroy']);
-
 
 });

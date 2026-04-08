@@ -4,6 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Student;
+use App\Models\PaymentType;
+use App\Models\Invoice;
+use App\Models\AcademicCycle;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int $id
@@ -38,6 +43,7 @@ class Payment extends Model
     protected $fillable =[
       'student_id',
       'payment_type_id',
+        'academic_cycle_id',
       'amount',
         'remaining_balance',
         'discount',
@@ -60,5 +66,9 @@ class Payment extends Model
     public function invoice()
     {
         return $this->hasOne(Invoice::class);
+    }
+    public function academicCycle()
+    {
+        return $this->belongsTo(AcademicCycle::class);
     }
 }

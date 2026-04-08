@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Guardian;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class StudentRegistrationController extends Controller
 {
@@ -98,17 +100,13 @@ class StudentRegistrationController extends Controller
                   ]
                 );
                 //vincular el responsable al estudiante
-                $student->guardians->attach($guardian->id, [
-                    'first_name' => $guardianData['first_name'],
-                    'last_name' => $guardianData['last_name'],
-                    'middle_name' => $guardianData['middle_name'] ?? null,
-                    'second_last_name' => $guardianData['second_last_name'] ?? null,
-                    'birth_date' => $guardianData['birth_date'],
-                    'education_level_id' => $guardianData['education_level_id'] ?? null,
-                    'occupation' => $guardianData['occupation'],
-                    'phone' => $guardianData['phone'],
-                    'email' => $guardianData['email'] ?? null,
-                    'address' => $guardianData['address'] ?? null,
+                $student->guardians()->attach($guardian->id, [
+                    'relationship_type_id' => $guardianData['relationship_type_id'],
+                    'is_legal_guardian' => $guardianData['is_legal_guardian'],
+                    'is_primary_contact' => $guardianData['is_primary_contact'],
+                    'lives_with_student' => $guardianData['lives_with_student'] ?? null,
+                    'priority_order' => $guardianData['priority_order'],
+                    'notes' => $guardianData['notes'] ?? null,
                 ]);
             }
             return $student->load('guardians');

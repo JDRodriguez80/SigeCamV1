@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class StudentController extends Controller
 {
@@ -21,6 +22,7 @@ class StudentController extends Controller
             'middle_name'        => 'nullable|string|max:255',
             'second_last_name'   => 'nullable|string|max:255',
             'curp'               => 'required|string|max:255|unique:students,curp',
+            'gender'=> 'required|in:masculino,femenino',
             'birth_date'         => 'required|date',
             'birth_place'        => 'required|string|max:255',
             'address'            => 'required|string',

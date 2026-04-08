@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('payment_id')->constrained('payments'); // Relación con el pago realizado
+            $table->foreignId('payment_id')->constrained('payments')->onDelete('cascade'); // Relación con el pago realizado
             $table->string('invoice_number')->unique(); // Número de factura (puede ser generado automáticamente)
             $table->decimal('amount', 10, 2); // Monto total del pago
             $table->date('invoice_date'); // Fecha de emisión del recibo
