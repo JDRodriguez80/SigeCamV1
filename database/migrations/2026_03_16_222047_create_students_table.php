@@ -33,6 +33,7 @@ return new class extends Migration
             $table->decimal('height', 5, 2);
             $table->enum('status', ['activo', 'inactivo', 'graduado', 'baja'])->default('activo');
             $table->text('notes')->nullable();
+            $table->string('photo')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

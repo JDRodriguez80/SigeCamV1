@@ -53,11 +53,6 @@ class Group extends Model
         return $this->belongsTo(AcademicCycle::class);
     }
 
-    public function section()
-    {
-        return $this->belongsTo(Section::class);
-    }
-
     public function gradeLevel()
     {
         return $this->belongsTo(GradeLevel::class);

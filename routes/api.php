@@ -54,11 +54,11 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::delete('/academicCycle/{id}',[AcademicCycleController::class, 'destroy']);
 
     // Rutas para los tipos de discapacidad
-    Route::get('/disabilityTypes', [DisabilityTypeController::class, 'index']);  // Obtener todos los tipos de discapacidad
-    Route::post('/disabilityTypes', [DisabilityTypeController::class, 'store']); // Crear un nuevo tipo de discapacidad
-    Route::put('/disabilityTypes/{id}', [DisabilityTypeController::class, 'update']); // Actualizar un tipo de discapacidad
-    Route::get('/disabilityTypes/{id}', [DisabilityTypeController::class, 'show']); // Actualizar un tipo de discapacidad
-    Route::delete('/disabilityTypes/{id}', [DisabilityTypeController::class, 'destroy']); // Eliminar un tipo de discapacidad
+    Route::get('/disabilityTypes', [DisabilityTypeController::class, 'index']);
+    Route::post('/disabilityTypes', [DisabilityTypeController::class, 'store']);
+    Route::put('/disabilityTypes/{id}', [DisabilityTypeController::class, 'update']);
+    Route::get('/disabilityTypes/{id}', [DisabilityTypeController::class, 'show']);
+    Route::delete('/disabilityTypes/{id}', [DisabilityTypeController::class, 'destroy']);
 
     //rutas para tipo de documentos
     Route::get('/documentType/',[DocumentTypeController::class, 'index']);
@@ -75,11 +75,11 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::delete('/educationLevel/{id}',[EducationLevelController::class, 'destroy']);
 
     //rutas para inscripciones
-    Route::get('/enrollments', [EnrollmentController::class, 'index']);  // Mostrar todas las inscripciones
-    Route::post('/enrollments', [EnrollmentController::class, 'store']); // Crear una inscripción
-    Route::get('/enrollments/{id}', [EnrollmentController::class, 'show']); // Mostrar inscripción por ID
-    Route::put('/enrollments/{id}', [EnrollmentController::class, 'update']); // Actualizar inscripción
-    Route::delete('/enrollments/{id}', [EnrollmentController::class, 'destroy']); // Eliminar inscripción
+    Route::get('/enrollments', [EnrollmentController::class, 'index']);
+    Route::post('/enrollments', [EnrollmentController::class, 'store']);
+    Route::get('/enrollments/{id}', [EnrollmentController::class, 'show']);
+    Route::put('/enrollments/{id}', [EnrollmentController::class, 'update']);
+    Route::delete('/enrollments/{id}', [EnrollmentController::class, 'destroy']);
 
     //rutas para grados
     Route::post('/gradeLevel/',[GradeLevelController::class,'store']);
@@ -102,16 +102,16 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::delete('/guardians/{id}',[GuardianController::class, 'destroy']);
 
     //rutas para invoices
-    Route::post('/invoices', [InvoiceController::class, 'store']);  // Crear una nueva factura
-    Route::get('/invoices/{id}', [InvoiceController::class, 'show']);  // Obtener una factura específica
-    Route::get('/invoices/student/{studentId}', [InvoiceController::class, 'index']);  // Listar todas las facturas de un estudiante
+    Route::post('/invoices', [InvoiceController::class, 'store']);
+    Route::get('/invoices/{id}', [InvoiceController::class, 'show']);
+    Route::get('/invoices/student/{studentId}', [InvoiceController::class, 'index']);
 
     //rutas para pagos
-    Route::get('/payments/{studentId}', [PaymentController::class, 'index']);  // Obtener pagos de un estudiante
-    Route::post('/payments', [PaymentController::class, 'store']);  // Crear un nuevo pago
-    Route::get('/payments/{id}', [PaymentController::class, 'show']);  // Obtener un pago específico
-    Route::put('/payments/{id}', [PaymentController::class, 'update']);  // Actualizar un pago
-    Route::delete('/payments/{id}', [PaymentController::class, 'destroy']);  // Eliminar un pago
+    Route::get('/payments/{studentId}', [PaymentController::class, 'index']);
+    Route::post('/payments', [PaymentController::class, 'store']);
+    Route::get('/payments/{id}', [PaymentController::class, 'show']);
+    Route::put('/payments/{id}', [PaymentController::class, 'update']);
+    Route::delete('/payments/{id}', [PaymentController::class, 'destroy']);
 
     //rutas para tipo de pagos
     Route::get('/paymentType/',[PaymentTypeController::class, 'index']);

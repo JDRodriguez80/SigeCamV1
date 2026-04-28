@@ -3,61 +3,80 @@
 namespace App\Http\Controllers;
 
 use App\Models\Enrollment;
+use App\Models\Group;
 use Illuminate\Http\Request;
 
 class EnrollmentController extends Controller
 {
     public function index()
     {
-     $enrollments =Enrollment::with('student','academicCycle','group')->get();
-     return response()->json($enrollments);
+        $enrollments = Enrollment::with('student', 'academicCycle', 'group')->get();
+        return response()->json($enrollments);
     }
-    //nueva inscripcion
+
+    public function indexWeb()
+    {
+        $groups = Group::with('academicCycle', 'gradeLevel.section')->get();
+        return view('enrollments.index', ['groups' => $groups]);
+    }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'student_id'=>'required|exists:students,id',
-            'academic_cycle_id'=>'required|exists:academic_cycles,id',
-            'group_id'=>'required|exists:groups,id',
-            'enrollment_date'=>'required|date',
+        $validatedData = $request->validate([
+            'student_id' => 'required|exists:students,id',
+            'academic_cycle_id' => 'required|exists:academic_cycles,id',
+            'group_id' => 'required|exists:groups,id',
+            'enrollment_date' => 'required|date',
             'status' => 'required|in:pre_inscrito,inscrito,baja,graduado,repetidor',
-            'has_complementary_care'=>'boolean',
-            'notes'=>'nullable|string'
+            'has_complementary_care' => 'boolean',
+            'notes' => 'nullable|string'
         ]);
 
-        $enrollment = Enrollment::create($request->all());
-        return response()->json($enrollment, 201);
+        $enrollment = Enrollment::create($validatedData);
+
+        if ($request->wantsJson()) {
+            return response()->json($enrollment, 201);
+        }
+
+        return redirect()->route('enrollments.index')->with('success', '¡Alumno inscrito exitosamente!');
     }
-    //mostrando un registro en especifico
+
     public function show($id)
     {
-        $enrollment=Enrollment::with('student', 'academicCycle', 'group')->findOrFail($id);
+        $enrollment = Enrollment::with('student', 'academicCycle', 'group')->findOrFail($id);
         return response()->json($enrollment);
     }
 
-    //actualizar registro de inscripcion
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'student_id'=>'required|exists:students,id',
-            'academic_cycle_id'=>'required|exists:academic_cycles,id',
-            'group_id'=>'required|exists:groups,id',
+        $validatedData = $request->validate([
+            'student_id' => 'required|exists:students,id',
+            'academic_cycle_id' => 'required|exists:academic_cycles,id',
+            'group_id' => 'required|exists:groups,id',
             'status' => 'required|in:pre_inscrito,inscrito,baja,graduado,repetidor',
-            'has_complementary_care'=>'boolean',
-            'notes'=>'nullable|string'
+            'has_complementary_care' => 'boolean',
+            'notes' => 'nullable|string'
         ]);
+
         $enrollment = Enrollment::findOrFail($id);
-        $enrollment->update($request->all());
-        return response()->json($enrollment);
+        $enrollment->update($validatedData);
+
+        if ($request->wantsJson()) {
+            return response()->json($enrollment);
+        }
+
+        return redirect()->route('enrollments.index')->with('success', 'Inscripción actualizada exitosamente.');
     }
 
-    //eliminando registro
     public function destroy($id)
     {
-        $enrollment=Enrollment::findOrFail($id);
+        $enrollment = Enrollment::findOrFail($id);
         $enrollment->delete();
 
-        return response()->json(null, 204);
+        if (request()->wantsJson()) {
+            return response()->json(null, 204);
+        }
+
+        return redirect()->route('enrollments.index')->with('success', 'Inscripción eliminada exitosamente.');
     }
 }

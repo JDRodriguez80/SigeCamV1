@@ -13,13 +13,12 @@ return new class extends Migration
     {
         Schema::create('student_guardians', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained('students');
-            $table->foreignId('guardian_id')->constrained('guardians');
+            $table->foreignId('student_id')->constrained('students')->onDelete('cascade');
+            $table->foreignId('guardian_id')->constrained('guardians')->onDelete('cascade');
             $table->foreignId('relationship_type_id')->constrained('relationship_types');
             $table->boolean('is_legal_guardian')->default(false);
             $table->boolean('is_primary_contact')->default(false);
             $table->boolean('lives_with_student')->nullable();
-            $table->tinyInteger('priority_order')->default(1);
             $table->text('notes')->nullable();
             $table->timestamps();
         });

@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @property int $is_legal_guardian
  * @property int $is_primary_contact
  * @property int|null $lives_with_student
- * @property int $priority_order
  * @property string|null $notes
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -30,7 +29,6 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @method static \Illuminate\Database\Eloquent\Builder|student_guardians whereIsPrimaryContact($value)
  * @method static \Illuminate\Database\Eloquent\Builder|student_guardians whereLivesWithStudent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|student_guardians whereNotes($value)
- * @method static \Illuminate\Database\Eloquent\Builder|student_guardians wherePriorityOrder($value)
  * @method static \Illuminate\Database\Eloquent\Builder|student_guardians whereRelationshipTypeId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|student_guardians whereStudentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|student_guardians whereUpdatedAt($value)
@@ -46,7 +44,6 @@ class Student_guardians extends Pivot
         'is_legal_guardian',
         'is_primary_contact',
         'lives_with_student',
-        'priority_order',
         'notes'
     ];
 

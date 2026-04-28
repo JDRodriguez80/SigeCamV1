@@ -50,14 +50,6 @@ class Section extends Model
     }
 
     /**
-     * Relación con los grupos
-     */
-    public function groups()
-    {
-       return $this->hasMany(Group::class);
-    }
-
-    /**
      * Relación con los ciclos académicos
      */
     public function academicCycles()
