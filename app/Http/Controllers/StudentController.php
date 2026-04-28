@@ -10,8 +10,14 @@ class StudentController extends Controller
 {
     public function index()
     {
-        $students = Student::with('guardians', 'payments', 'documents')->get();
+        $students = Student::with('guardians', 'payments', 'documents', 'disabilityType')->get();
         return response()->json($students, 200);
+    }
+
+    public function indexWeb()
+    {
+        $students = Student::with('guardians','payments','documents', 'disabilityType')->get();
+        return view('students.index', ['students' => $students]);
     }
 
     public function store(Request $request)
@@ -61,10 +67,15 @@ class StudentController extends Controller
         return response()->json($student, 201);
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $student = Student::with('guardians','payments','documents')->findOrFail($id);
-        return response()->json($student, 200);
+        $student = Student::with('guardians','payments','documents', 'disabilityType')->findOrFail($id);
+
+        if ($request->wantsJson()){
+            return response()->json($student, 200);
+        }
+
+        return view('students.show', ['student' => $student]);
     }
 
     public function update(Request $request, $id)
@@ -114,10 +125,32 @@ class StudentController extends Controller
         return response()->json($student, 200);
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $student = Student::findOrFail($id);
         $student->delete();
-        return response(null, 204);
+
+        if ($request->wantsJson() || $request->is('api/*')) {
+            return response(null, 204);
+        }
+
+        return redirect()->route('students.index')->with('success', 'Estudiante eliminado exitosamente.');
+    }
+
+    /**
+     * Busca un estudiante por su CURP, eliminando espacios en blanco.
+     */
+    public function searchByCurp($curp)
+    {
+        // Limpiar el CURP de espacios en blanco al principio y al final
+        $cleanedCurp = trim($curp);
+
+        $student = Student::where('curp', $cleanedCurp)->first();
+
+        if ($student) {
+            return response()->json($student);
+        }
+
+        return response()->json(['message' => 'Estudiante no encontrado'], 404);
     }
 }

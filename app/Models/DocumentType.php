@@ -13,6 +13,7 @@ class DocumentType extends Model
         'name',
         'applies_to',
         'requires_cycle',
+        'is_required'
     ];
 
     public function students()

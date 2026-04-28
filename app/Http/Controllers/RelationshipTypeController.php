@@ -16,6 +16,11 @@ class relationshipTypeController extends Controller
         return response()->json($relationshipType);
     }
 
+    public function indexWeb()
+    {
+        $relationshipType=relationshipType::all();
+        return view('relationshipTypes.index', ['relationshipTypes' => $relationshipType]);
+    }
     /**
      * Show the form for creating a new resource.
      *

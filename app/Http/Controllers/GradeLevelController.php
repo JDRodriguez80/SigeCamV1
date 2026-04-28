@@ -16,8 +16,19 @@ class GradeLevelController extends Controller
         return response()->json($gradeLevels);
     }
 
+    public function indexWeb()
+    {
+        $gradeLevels = GradeLevel::with('section')->get();
+        return view('gradeLevels.index', ['gradeLevels' => $gradeLevels]);
+    }
+
     //creando niveles
 
+    public function create()
+    {
+        $sections = Section::all();
+        return view('gradeLevels.create', ['sections' => $sections]);
+    }
     public function store(Request $request)
     {
         $request->validate([
@@ -27,7 +38,10 @@ class GradeLevelController extends Controller
             'is_active'=>'boolean'
         ]);
         $gradeLevel = GradeLevel::create($request->all());
-        return response()->json($gradeLevel, 201);
+        if($request->wantsJson()){
+            return response()->json($gradeLevel, 201);
+        }
+        return redirect()->route('gradeLevels.index')->with('success', 'Grado creado exitosamente.');
     }
 
     //mostrando nivel de grado especifico
@@ -35,7 +49,17 @@ class GradeLevelController extends Controller
     public function show($id)
     {
         $gradeLevel = GradeLevel::with('section')->findOrFail($id);
-       return response()->json($gradeLevel);
+       if (\request()->wantsJson()){
+        return response()->json($gradeLevel);
+       }
+       return view('gradeLevels.show', compact('gradeLevel'));
+    }
+
+    public function edit(Request $request, $id)
+    {
+        $gradeLevel = GradeLevel::findOrFail($id);
+        $sections = Section::all();
+        return view('gradeLevels.edit', compact('gradeLevel', 'sections'));
     }
 
     //actualizar un nivel de grado especifico
@@ -50,14 +74,20 @@ class GradeLevelController extends Controller
 
         $gradeLevel = GradeLevel::findOrFail($id);
         $gradeLevel->update($request->all());
-        return response()->json($gradeLevel);
+        if ($request->wantsJson()) {
+            return response()->json($gradeLevel, 200);
+        }
+        return redirect()->route('gradeLevels.index')->with('success', 'Grado actualizado exitosamente.');
     }
 
     //eliminar un nivel de grado especifico
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $gradeLevel =GradeLevel::findOrFail($id);
         $gradeLevel->delete();
-        return response()->json(null, 204);
+        if ($request->wantsJson()) {
+            return response()->json(null, 204);
+        }
+        return redirect()->route('gradeLevels.index')->with('success', 'Grado eliminado exitosamente.');
     }
 }

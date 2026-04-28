@@ -65,7 +65,7 @@ class Guardian extends Model
     public function students()
     {
         return $this->belongsToMany(Student::class, 'student_guardians')
-            ->withPivot('relationship_type_id','is_legal_guardian', 'is_primary_contact','lives_with_student', 'priority_order', 'notes')
+            ->withPivot('relationship_type_id','is_legal_guardian', 'is_primary_contact','lives_with_student', 'notes')
             ->withTimestamps();
     }
     /*Relacion con los documentos*/
