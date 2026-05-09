@@ -27,6 +27,9 @@ class Role extends Model
     protected $fillable=[
         'name'
     ];
+    protected $guarded=[
+
+    ];
 
     public function users()
     {

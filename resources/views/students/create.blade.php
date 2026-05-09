@@ -51,9 +51,23 @@
                             <div class="col-md-4"><div class="form-group"><label>Género</label><select class="form-select" name="student[gender]"><option value="masculino">Masculino</option><option value="femenino">Femenino</option></select></div></div>
                             <div class="col-md-4"><div class="form-group"><label>Fecha de Nacimiento</label><input type="date" class="form-control flatpickr-calendar" name="student[birth_date]" value="{{ old('student.birth_date') }}" required></div></div>
                             <div class="col-md-8"><div class="form-group"><label>Lugar de Nacimiento</label><input type="text" class="form-control" name="student[birth_place]" value="{{ old('student.birth_place') }}" required></div></div>
-                            <div class="col-md-12"><div class="form-group"><label>Dirección</label><textarea class="form-control" name="student[address]" rows="2">{{ old('student.address') }}</textarea></div></div>
+                            <div class="col-md-12"><div class="form-group"><label>Dirección</label><textarea class="form-control" name="student[address]" rows="2" style="resize: none;">{{ old('student.address') }}</textarea></div></div>
                             <div class="col-md-4"><div class="form-group"><label>Teléfono</label><input type="tel" class="form-control" name="student[phone]" value="{{ old('student.phone') }}"></div></div>
-                            <div class="col-md-4"><div class="form-group"><label>Tipo de Sangre</label><input type="text" class="form-control" name="student[blood_type]" value="{{ old('student.blood_type') }}"></div></div>
+                           {{-- <div class="col-md-4"><div class="form-group"><label>Tipo de Sangre</label><input type="text" class="form-control" name="student[blood_type]" value="{{ old('student.blood_type') }}"></div></div>--}}
+                            <div class="col-md-4"><div class="form-group"><label>Tipo de sangre</label>
+                                        <select class="form-select" name="student[blood_type]">
+                                            <option value="">Seleccione una opción</option>
+                                            <option value="A+">A+</option>
+                                            <option value="A-">A-</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B-">B-</option>
+                                            <option value="AB+">AB+</option>
+                                            <option value="AB-">AB-</option>
+                                            <option value="O+">O+</option>
+                                            <option value="O-">O-</option>
+                                        </select>
+                                </div>
+                            </div>
                             <div class="col-md-4"><div class="form-group"><label>Tipo de Discapacidad</label><select class="form-select" name="student[disability_type_id]"><option value="">Ninguna</option>@foreach($disabilityTypes as $type)<option value="{{ $type->id }}" {{ old('student.disability_type_id') == $type->id ? 'selected' : '' }}>{{ $type->name }}</option>@endforeach</select></div></div>
                             <div class="col-md-4"><div class="form-group"><label>Escuela de Origen</label><input type="text" class="form-control" name="student[origin_school]" value="{{ old('student.origin_school') }}"></div></div>
                             <div class="col-md-3"><div class="form-group"><label>Talla Pantalón</label><input type="text" class="form-control" name="student[pants_size]" value="{{ old('student.pants_size') }}"></div></div>
@@ -63,7 +77,7 @@
                             <div class="col-md-3"><div class="form-group"><label>Altura (m)</label><input type="number" step="0.01" class="form-control" name="student[height]" value="{{ old('student.height') }}"></div></div>
                             <div class="col-md-3"><div class="form-group"><label>Estado</label><select class="form-select" name="student[status]"><option value="activo">Activo</option><option value="inactivo">Inactivo</option><option value="graduado">Graduado</option><option value="baja">Baja</option></select></div></div>
                             <div class="col-md-6"><div class="form-group"><label>Fotografía</label><input type="file" class="form-control" name="student[photo]" accept="image/*"></div></div>
-                            <div class="col-md-12"><div class="form-group"><label>Notas Adicionales</label><textarea class="form-control" name="student[notes]">{{ old('student.notes') }}</textarea></div></div>
+                            <div class="col-md-12"><div class="form-group"><label>Notas Adicionales</label><textarea class="form-control" name="student[notes]" style="resize: none;" rows="4">{{ old('student.notes') }}</textarea></div></div>
                         </div>
                     </div>
                 </div>
@@ -138,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="col-md-4"><div class="form-group"><label>Ocupación</label><input type="text" class="form-control" name="guardians[${currentIndex}][occupation]" required></div></div>
                 <div class="col-md-4"><div class="form-group"><label>Teléfono</label><input type="tel" class="form-control" name="guardians[${currentIndex}][phone]" required></div></div>
                 <div class="col-md-4"><div class="form-group"><label>Email</label><input type="email" class="form-control" name="guardians[${currentIndex}][email]"></div></div>
-                <div class="col-md-12"><div class="form-group"><label>Dirección</label><textarea class="form-control" name="guardians[${currentIndex}][address]" rows="2"></textarea></div></div>
+                <div class="col-md-12"><div class="form-group"><label>Dirección</label><textarea class="form-control" name="guardians[${currentIndex}][address]" style="resize: none;" rows="2"></textarea></div></div>
                 <div class="col-md-12">
                     <div class="form-check form-switch"><input class="form-check-input" type="checkbox" name="guardians[${currentIndex}][is_primary_contact]" value="1"><label class="form-check-label">Contacto Principal</label></div>
                     <div class="form-check form-switch"><input class="form-check-input" type="checkbox" name="guardians[${currentIndex}][is_legal_guardian]" value="1"><label class="form-check-label">Tutor Legal</label></div>

@@ -52,4 +52,38 @@ use Illuminate\Database\Eloquent\Model;
 class Documents extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'documentable_type',
+        'documentable_id',
+        'document_type_id',
+        'uploaded_by',
+        'disk',
+        'path',
+        'original_name',
+        'mime_type',
+        'extension',
+        'size',
+        'is_current',
+        'issued_at',
+        'expires_at',
+        'notes'
+    ];
+
+    // Relación con el modelo de documentos
+    public function documentable()
+    {
+        return $this->morphTo();  // Permite que sea cualquier tipo de modelo (como Student)
+    }
+
+    // Relación con el tipo de documento
+    public function documentType()
+    {
+        return $this->belongsTo(DocumentType::class);
+    }
+
+    // Relación con el usuario que subió el documento
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'uploaded_by');
+    }
 }

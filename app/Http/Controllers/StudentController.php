@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\RelationshipType;
+use App\Models\StudentGuardian;
+use App\Models\DisabilityType;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -69,15 +71,42 @@ class StudentController extends Controller
 
     public function show(Request $request, $id)
     {
-        $student = Student::with('guardians','payments','documents', 'disabilityType')->findOrFail($id);
+        $student = Student::with(['guardians' => function($query) {
+                $query->withPivot('relationship_type_id', 'is_legal_guardian', 'is_primary_contact', 'lives_with_student', 'notes')
+                ->using(StudentGuardian::class);
+            }, 'disabilityType'])->findOrFail($id);
 
-        if ($request->wantsJson()){
-            return response()->json($student, 200);
+            // Obtener el tutor principal
+            $mainTutor = $student->guardians()
+                ->wherePivot('is_primary_contact', 1)->using(StudentGuardian::class)
+                ->first();
+
+            // Cargar el tipo de relación
+            if ($mainTutor) {
+                $relationshipType = RelationshipType::find($mainTutor->pivot->relationship_type_id);
+                $mainTutor->relationshipTypeName = $relationshipType ? $relationshipType->name : 'No especificado';
+            }
+
+            //gettin non main guardians
+            $otherTutors =$student->guardians()->wherePivot('is_primary_contact', 0)->get();
+            $disability = DisabilityType::all();
+
+            if ($request->wantsJson()){
+                return response()->json($student, 200);
+            }
+
+            return view('students.show', ['student' => $student, 'mainTutor' => $mainTutor, 'otherTutors' => $otherTutors,  'disability' => $disability]);
         }
 
-        return view('students.show', ['student' => $student]);
+    public function edit(Request $request, $id)
+    {
+        $student = Student::findOrFail($id);
+        if ($request->wantsJson()){
+            $student = Student::with('guardians')->findOrFail($id);
+            return response()->json($student);
+        }
+        return view('students.edit', compact( 'student') );
     }
-
     public function update(Request $request, $id)
     {
         $request->validate([

@@ -35,6 +35,6 @@ class RelationshipType extends Model
 
     public function studentGuardians()
     {
-        return $this->hasMany(student_guardians::class);
+       return $this->hasMany(StudentGuardian::class);
     }
 }

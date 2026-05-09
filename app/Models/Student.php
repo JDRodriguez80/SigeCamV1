@@ -31,12 +31,13 @@ class Student extends Model
         'height',
         'status',
         'notes',
-        'photo' // Añadido el nuevo campo de foto
+        'photo'
     ];
 
     public function guardians()
     {
         return $this->belongsToMany(Guardian::class, 'student_guardians')
+            ->using(StudentGuardian::class) // Usar el modelo pivote personalizado
             ->withPivot('relationship_type_id', 'is_legal_guardian', 'is_primary_contact','lives_with_student','notes')
             ->withTimestamps();
     }

@@ -13,7 +13,8 @@
                 <thead>
                     <tr>
                         <th>Foto</th>
-                        <th>Nombre</th>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
                         <th>CURP</th>
                         <th>Teléfono</th>
                         <th>Discapacidad</th>
@@ -24,7 +25,8 @@
                     @forelse ($students as $student)
                         <tr>
                             <td><img src="{{ $student->photo ? asset('storage/'.$student->photo): 'https://ui-avatars.com/api/?name=' . urlencode($student->first_name . ' ' . $student->last_name) . '&color=7F9CF5&background=EBF4FF'}}" class="img-thumbnail " alt="Foto del estudiante" style="max-width: 100px; max-height: 100px;"></td>
-                            <td>{{ $student->first_name }} {{ $student->last_name }}</td>
+                            <td>{{ $student->first_name }} {{ $student->middle_name }}</td>
+                            <td>{{ $student->last_name }} {{ $student->second_last_name }}</td>
                             <td>{{ $student->curp }}</td>
                             <td>{{ $student->phone }}</td>
                            {{-- <td>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DisabilityType;
 use App\Models\Guardian;
 use App\Models\Student;
 use App\Models\RelationshipType;
@@ -15,9 +16,11 @@ class StudentRegistrationController extends Controller
     {
         $relationshipTypes = RelationshipType::all();
         $disabilityTypes = \App\Models\DisabilityType::all();
+        $documentType =DisabilityType::all();
         return view('students.create', [
             'relationshipTypes' => $relationshipTypes,
-            'disabilityTypes' => $disabilityTypes
+            'disabilityTypes' => $disabilityTypes,
+            'documentTypes' => $documentType
         ]);
     }
 

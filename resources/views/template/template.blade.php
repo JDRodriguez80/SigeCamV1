@@ -74,6 +74,7 @@
                 </nav>
             </header>
             <div id="main-content">
+            @yield('content_header')
 
                 @yield('content')
 

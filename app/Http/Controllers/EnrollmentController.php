@@ -32,6 +32,19 @@ class EnrollmentController extends Controller
             'notes' => 'nullable|string'
         ]);
 
+        // Lógica de validación de duplicidad
+        $existingEnrollment = Enrollment::where('student_id', $validatedData['student_id'])
+                                        ->where('academic_cycle_id', $validatedData['academic_cycle_id'])
+                                        ->first();
+
+        if ($existingEnrollment) {
+            $message = 'El alumno ya está inscrito en un grupo para este ciclo escolar.';
+            if ($request->wantsJson()) {
+                return response()->json(['message' => $message], 409); // 409 Conflict
+            }
+            return redirect()->back()->withErrors(['enrollment' => $message])->withInput();
+        }
+
         $enrollment = Enrollment::create($validatedData);
 
         if ($request->wantsJson()) {
@@ -57,6 +70,20 @@ class EnrollmentController extends Controller
             'has_complementary_care' => 'boolean',
             'notes' => 'nullable|string'
         ]);
+
+        // Lógica de validación de duplicidad para update (si el alumno cambia de grupo en el mismo ciclo)
+        $existingEnrollment = Enrollment::where('student_id', $validatedData['student_id'])
+                                        ->where('academic_cycle_id', $validatedData['academic_cycle_id'])
+                                        ->where('id', '!=', $id) // Excluir la inscripción actual
+                                        ->first();
+
+        if ($existingEnrollment) {
+            $message = 'El alumno ya está inscrito en un grupo para este ciclo escolar.';
+            if ($request->wantsJson()) {
+                return response()->json(['message' => $message], 409); // 409 Conflict
+            }
+            return redirect()->back()->withErrors(['enrollment' => $message])->withInput();
+        }
 
         $enrollment = Enrollment::findOrFail($id);
         $enrollment->update($validatedData);

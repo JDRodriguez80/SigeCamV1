@@ -7,7 +7,7 @@
                         @if(isset($systemLogo) && $systemLogo)
                             <img src="{{ asset('storage/' . $systemLogo) }}" alt="Logo" srcset="">
                         @else
-                            <img src="{{ asset('assets/compiled/svg/logo.svg') }}" alt="Logo" srcset="">
+                            <img style="width: 150px; height: 150px;" src="{{ asset('storage/logos/OQiSBkyWtkeiGkdJL2PQz2kR2w6qOYryUKKG03nk.png') }}" alt="Logo" srcset="">
                         @endif
                     </a>
                 </div>
@@ -109,6 +109,12 @@
                     <a href="{{ route('settings.index') }}" class='sidebar-link'>
                         <i class="bi bi-gear-fill"></i>
                         <span>Configuración</span>
+                    </a>
+                </li>
+                <li class="sidebar-item {{ request()->routeIs('roles.*') ? 'active' : '' }}">
+                    <a href="{{ route('roles.index') }}" class='sidebar-link'>
+                        <i class="bi bi-person-bounding-box"></i>
+                        <span>Roles</span>
                     </a>
                 </li>
 

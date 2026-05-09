@@ -11,6 +11,8 @@ use App\Http\Controllers\GradeLevelController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\RoleController;
+use App\Models\Group; // Importar el modelo Group
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,7 +31,8 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $activeGroupsCount = Group::where('status', 'active')->count(); // Obtener el conteo de grupos activos
+    return view('dashboard', compact('activeGroupsCount')); // Pasar el conteo a la vista
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -102,6 +105,16 @@ Route::middleware('auth')->group(function () {
     // Rutas para Configuración
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
     Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
+
+    //rutas para roles
+    Route::get('/roles', [RoleController::class, 'indexWeb'])->name('roles.index');
+    Route::get('/roles/create', [RoleController::class, 'create'])->name('roles.create');
+    Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
+    Route::get('/roles/{id}', [RoleController::class, 'show'])->name('roles.show');
+    Route::get('/roles/{id}/edit', [RoleController::class, 'edit'])->name('roles.edit');
+    Route::patch('/roles/{id}', [RoleController::class, 'update'])->name('roles.update');
+    Route::delete('/roles/{id}', [RoleController::class, 'destroy'])->name('roles.destroy');
+
 });
 
 require __DIR__.'/auth.php';
